@@ -129,13 +129,19 @@ def process_files(folder, restrict_extensions=True):
     # 儲存需要重新命名的檔案
     files_to_rename = []
     for root, filename in files_to_process:
-        new_name = filename
-        # 遍歷所有要去除的字串並從檔案名稱中去除
+        # 將檔名和副檔名分開
+        name, extension = os.path.splitext(filename)
+        new_name = name
+
+        # 遍歷所有要去除的字串並從檔名中去除
         for to_remove in culling_settings:
             new_name = new_name.replace(to_remove, "")
-
-        # 移除檔名開頭和結尾的空白
+        
+        # 移除頭尾的空白
         new_name = new_name.strip()
+
+        # 重新組合檔名和副檔名
+        new_name = new_name + extension
 
         # 檢查檔案名稱是否已經改變
         if filename != new_name:
